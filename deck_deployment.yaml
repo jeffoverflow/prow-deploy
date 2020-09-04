@@ -32,9 +32,6 @@ spec:
         - --hook-url=http://hook:8888/plugin-help
         - --github-token-path=/etc/github/oauth
         - --plugin-config=/etc/plugins/plugins.yaml
-        - --oauth-url=/github-login
-        - --github-oauth-config-file=/etc/oauth/secret
-        - --cookie-secret=/etc/cookie/secret
         ports:
           - name: http
             containerPort: 8080
@@ -47,12 +44,6 @@ spec:
           readOnly: true
         - name: plugins
           mountPath: /etc/plugins
-          readOnly: true
-        - name: oauth-config
-          mountPath: /etc/oauth
-          readOnly: true
-        - name: cookie-secret
-          mountPath: /etc/cookie
           readOnly: true
         livenessProbe:
           httpGet:
@@ -77,9 +68,3 @@ spec:
       - name: plugins
         configMap:
           name: plugins
-      - name: oauth-config
-        secret:
-          secretName: github-oauth-config
-      - name: cookie-secret
-        secret:
-          secretName: cookie
